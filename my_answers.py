@@ -24,8 +24,6 @@ def window_transform_series(series, window_size):
     y = np.asarray(y)
     y.shape = (len(y),1)
 
-    print(X.shape)
-    print(y.shape)
     return X,y
 
 # TODO: build an RNN to perform regression on our time series input/output data
