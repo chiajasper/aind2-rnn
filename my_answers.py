@@ -13,7 +13,7 @@ def window_transform_series(series, window_size):
     X = []
     y = []
 
-    for i in range(0,len(series), window_size):
+    for i in range(0,len(series)):
         if i+window_size < len(series):
             X.append(series[i:i+window_size])
             y.append(series[i+window_size])
@@ -24,13 +24,14 @@ def window_transform_series(series, window_size):
     y = np.asarray(y)
     y.shape = (len(y),1)
 
+    print(X.shape)
+    print(y.shape)
     return X,y
 
 # TODO: build an RNN to perform regression on our time series input/output data
 def build_part1_RNN(window_size):
     rnnModel = Sequential()
-    # incraese the hidden unit to 10 from 5 in the instuction to improve the accuracy
-    rnnModel.add(LSTM(10, input_shape=(window_size,1)))
+    rnnModel.add(LSTM(5, input_shape=(window_size,1)))
     rnnModel.add(Dense(1))
     return rnnModel
 
@@ -40,7 +41,8 @@ def cleaned_text(text):
     chars = list(text)
 
     def isAlphaNumericOrSpace(c):
-        return re.match('\w',str(c)) or c == ' '   
+        reg = re.compile('[a-zA-Z]')
+        return reg.match(str(c)) or c == ' '   
 
     texts = list(filter(lambda x: isAlphaNumericOrSpace(x) or x in punctuation, chars))
     return ''.join(texts)
